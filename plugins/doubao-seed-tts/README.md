@@ -15,10 +15,13 @@ installs keep working; the package itself covers both voice directions.
 ## Install
 
 ```bash
-lax plugin install ./plugins/doubao-seed-tts --trust sandboxed --yes
+lax plugin install https://github.com/sumwai/lax-plugins/tree/master/plugins/doubao-seed-tts \
+    --trust sandboxed --yes
 printf '%s' "$DOUBAO_API_KEY" \
     | lax account add doubao --provider doubao-seed --models seed-tts-2.0,bigmodel --key -
 ```
+
+也可以先克隆仓库，把 `./plugins/doubao-seed-tts` 作为本地目录传给 `lax plugin install`。
 
 `--key -` reads the key from standard input, so it does not enter shell history.
 Both upstream model names must be allowed on the account: `seed-tts-2.0` for TTS
