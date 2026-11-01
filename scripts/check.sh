@@ -49,10 +49,16 @@ export XDG_DATA_HOME="$work/data"
 
 # Older lax releases only accept local directories. Once the checked-out lax
 # understands GitHub sources, exercise the documented install path too.
-if "$binary" plugin install --help 2>&1 | grep -q 'GitHub 仓库安装'; then
+if "$binary" plugin install --help 2>&1 | grep -q 'GitHub'; then
   "$binary" plugin install \
     "https://github.com/sumwai/lax-plugins/tree/master/plugins/doubao-seed-tts" \
     --trust sandboxed --dry-run
+fi
+
+# Pin to a released tag. This fails if the tag is missing, which is the point:
+# users who write name@version depend on these tags staying available.
+if "$binary" plugin install --help 2>&1 | grep -q '官方插件名'; then
+  "$binary" plugin install doubao-seed-tts@1.2.1 --trust sandboxed --dry-run
 fi
 
 "$binary" plugin install "$repo_root/plugins/doubao-seed-tts" --trust sandboxed --yes
