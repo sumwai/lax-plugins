@@ -18,6 +18,7 @@
 lax init                                      # 首次使用 lax 时
 lax plugin install doubao-seed-tts --trust sandboxed --yes          # 最新版
 lax plugin install doubao-seed-tts@1.2.1 --trust sandboxed --yes    # 固定到 1.2.1
+lax plugin ls --available                                           # 看默认分支里有哪些插件、哪些已安装
 ```
 
 `runtime` 是 `moejs` 的插件必须用 `--trust sandboxed`。不写 `@版本` 时取默认分支的最新版；写上 `@1.2.1` 时会取本仓库的 tag `doubao-seed-tts-v1.2.1`，不会跟着默认分支走。

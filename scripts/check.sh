@@ -47,6 +47,16 @@ export XDG_DATA_HOME="$work/data"
 
 "$binary" init
 
+# The available list reads this repository's default branch, so only exercise
+# it when the checked-out lax already understands the flag.
+if "$binary" plugin ls --help 2>&1 | grep -q -- '--available'; then
+  available="$("$binary" plugin ls --available)"
+  if [[ "$available" != *"doubao-seed-tts"* ]]; then
+    printf 'plugin ls --available did not list doubao-seed-tts:\n%s\n' "$available" >&2
+    exit 1
+  fi
+fi
+
 # Older lax releases only accept local directories. Once the checked-out lax
 # understands GitHub sources, exercise the documented install path too.
 if "$binary" plugin install --help 2>&1 | grep -q 'GitHub'; then
