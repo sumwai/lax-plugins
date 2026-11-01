@@ -2,7 +2,7 @@
   "schema": "lax.plugin/v1",
   "id": "com.lax.doubao-seed",
   "name": "Doubao Seed Voice",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "kind": "provider",
   "runtime": "moejs",
   "entry": "./index.js",

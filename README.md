@@ -6,7 +6,7 @@
 
 | 目录 | 插件 ID | 版本 | 运行时 | 提供的能力 |
 | --- | --- | --- | --- | --- |
-| `plugins/doubao-seed-tts` | `com.lax.doubao-seed` | 1.2.0 | `moejs` | 豆包 Seed-TTS 2.0 语音合成、Seed-ASR 极速版语音转写 |
+| `plugins/doubao-seed-tts` | `com.lax.doubao-seed` | 1.2.1 | `moejs` | 豆包 Seed-TTS 2.0 语音合成、Seed-ASR 极速版语音转写 |
 
 字段映射、音色、格式与已知边界见各插件自己的 `README.md`。
 
