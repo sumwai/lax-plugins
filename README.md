@@ -16,18 +16,20 @@
 
 ```bash
 lax init                                      # 首次使用 lax 时
-lax plugin install https://github.com/sumwai/lax-plugins/tree/master/plugins/doubao-seed-tts \
-    --trust sandboxed --yes
+lax plugin install doubao-seed-tts --trust sandboxed --yes          # 最新版
+lax plugin install doubao-seed-tts@1.2.1 --trust sandboxed --yes    # 固定到 1.2.1
 ```
 
-`runtime` 是 `moejs` 的插件必须用 `--trust sandboxed`。安装前可以先看计划，不复制文件也不写库：
+`runtime` 是 `moejs` 的插件必须用 `--trust sandboxed`。不写 `@版本` 时取默认分支的最新版；写上 `@1.2.1` 时会取本仓库的 tag `doubao-seed-tts-v1.2.1`，不会跟着默认分支走。
+
+安装前可以先看计划，不复制文件也不写库：
 
 ```bash
 lax plugin install https://github.com/sumwai/lax-plugins/tree/master/plugins/doubao-seed-tts \
     --trust sandboxed --dry-run
 ```
 
-也可以写短形式 `github.com/sumwai/lax-plugins/plugins/doubao-seed-tts`，或用 `@<ref>` 指定分支、tag、提交号。老版本 lax 还不认识 GitHub 来源时，先克隆本仓库，再把本地目录交给安装命令：
+也可以写完整来源 `https://github.com/sumwai/lax-plugins/tree/master/plugins/doubao-seed-tts`、短形式 `github.com/sumwai/lax-plugins/plugins/doubao-seed-tts`，或用 `@<ref>` 指定分支、tag、提交号。老版本 lax 还不认识 GitHub 来源与裸插件名时，先克隆本仓库，再把本地目录交给安装命令：
 
 ```bash
 git clone https://github.com/sumwai/lax-plugins.git
@@ -85,6 +87,13 @@ plugins/<插件名>/
 ## 开发
 
 插件版本以 `lax.plugin.json` 的 `version` 为准。同一版本不能覆盖，包内任何文件改动后都要升版本。仓库不另设全局版本号。
+
+发布时给插件建 annotated tag `<插件名>-v<版本>`，例如 `doubao-seed-tts-v1.2.1`。用户写 `doubao-seed-tts@1.2.1` 时，lax 会映射到这个 tag；多个插件因此可以各自有 1.0.0 而不撞车。推 tag：
+
+```bash
+git tag -a doubao-seed-tts-v1.2.1 -m "doubao-seed-tts v1.2.1"
+git push origin doubao-seed-tts-v1.2.1
+```
 
 `make check` 会取当前 lax（默认从 GitHub 浅克隆，也可以指向本地检出），把插件复制到 lax 的临时目录跑单元测试，再在临时数据目录里安装并运行 `plugin doctor` 与 `plugin verify --all`。需要 Go 工具链与网络：
 
