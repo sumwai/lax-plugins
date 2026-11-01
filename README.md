@@ -12,18 +12,26 @@
 
 ## 安装
 
-先安装 lax，再克隆本仓库并安装插件：
+先安装带 GitHub 插件来源支持的 lax，然后直接从本仓库安装：
 
 ```bash
-git clone https://github.com/sumwai/lax-plugins.git
 lax init                                      # 首次使用 lax 时
-lax plugin install ./lax-plugins/plugins/doubao-seed-tts --trust sandboxed --yes
+lax plugin install https://github.com/sumwai/lax-plugins/tree/master/plugins/doubao-seed-tts \
+    --trust sandboxed --yes
 ```
 
 `runtime` 是 `moejs` 的插件必须用 `--trust sandboxed`。安装前可以先看计划，不复制文件也不写库：
 
 ```bash
-lax plugin install ./lax-plugins/plugins/doubao-seed-tts --trust sandboxed --dry-run
+lax plugin install https://github.com/sumwai/lax-plugins/tree/master/plugins/doubao-seed-tts \
+    --trust sandboxed --dry-run
+```
+
+也可以写短形式 `github.com/sumwai/lax-plugins/plugins/doubao-seed-tts`，或用 `@<ref>` 指定分支、tag、提交号。老版本 lax 还不认识 GitHub 来源时，先克隆本仓库，再把本地目录交给安装命令：
+
+```bash
+git clone https://github.com/sumwai/lax-plugins.git
+lax plugin install ./lax-plugins/plugins/doubao-seed-tts --trust sandboxed --yes
 ```
 
 如果 `lax serve` 正在运行，装完或升级后执行：

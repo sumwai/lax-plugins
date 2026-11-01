@@ -4,6 +4,7 @@ set -euo pipefail
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 work="$(mktemp -d)"
 package_dir=""
+binary="$work/bin/lax"
 
 cleanup() {
   if [[ -n "$package_dir" ]]; then
@@ -36,14 +37,24 @@ package_name="$(basename "$package_dir")"
 (
   cd "$lax_dir"
   go test "./plugins/$package_name"
-  go build -o "$work/lax" ./cmd/lax
+  mkdir -p "$(dirname "$binary")"
+  go build -o "$binary" ./cmd/lax
 )
 
 mkdir -p "$work/config" "$work/data"
 export XDG_CONFIG_HOME="$work/config"
 export XDG_DATA_HOME="$work/data"
 
-"$work/lax" init
-"$work/lax" plugin install "$repo_root/plugins/doubao-seed-tts" --trust sandboxed --yes
-"$work/lax" plugin doctor
-"$work/lax" plugin verify --all
+"$binary" init
+
+# Older lax releases only accept local directories. Once the checked-out lax
+# understands GitHub sources, exercise the documented install path too.
+if "$binary" plugin install --help 2>&1 | grep -q 'GitHub 仓库安装'; then
+  "$binary" plugin install \
+    "https://github.com/sumwai/lax-plugins/tree/master/plugins/doubao-seed-tts" \
+    --trust sandboxed --dry-run
+fi
+
+"$binary" plugin install "$repo_root/plugins/doubao-seed-tts" --trust sandboxed --yes
+"$binary" plugin doctor
+"$binary" plugin verify --all
