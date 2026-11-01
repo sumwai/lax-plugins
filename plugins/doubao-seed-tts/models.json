@@ -1,0 +1,36 @@
+{
+  "models": [
+    {
+      "model": "doubao-seed-tts",
+      "upstream_id": "seed-tts-2.0",
+      "operations": {
+        "speech.synthesize@1": {
+          "dialect": "com.lax.doubao-seed/seed-tts@1",
+          "capabilities": {
+            "supported": true,
+            "streaming": false,
+            "formats": ["mp3", "wav", "pcm"],
+            "voices": [
+              "zh_female_xiaohe_uranus_bigtts",
+              "zh_female_vv_uranus_bigtts"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "model": "doubao-seed-asr",
+      "upstream_id": "bigmodel",
+      "operations": {
+        "speech.transcribe@1": {
+          "dialect": "com.lax.doubao-seed/seed-asr@1",
+          "capabilities": {
+            "supported": true,
+            "streaming": false,
+            "formats": ["wav", "mp3"]
+          }
+        }
+      }
+    }
+  ]
+}

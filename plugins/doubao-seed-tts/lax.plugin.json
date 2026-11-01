@@ -1,0 +1,52 @@
+{
+  "schema": "lax.plugin/v1",
+  "id": "com.lax.doubao-seed",
+  "name": "Doubao Seed Voice",
+  "version": "1.2.0",
+  "kind": "provider",
+  "runtime": "moejs",
+  "entry": "./index.js",
+  "abi": "lax.plugin/v1",
+  "requires": ["operation:speech.synthesize@1", "operation:speech.transcribe@1", "runtime:moejs"],
+  "permissions": {
+    "network": {"mode": "none", "schemes": [], "hosts": [], "redirects": "none"},
+    "secrets": {"plugin": [], "account": ["api_key"], "mode": "host-inject"},
+    "filesystem": "none",
+    "process": "none",
+    "env": "none"
+  },
+  "options": {
+    "resource_id": {
+      "type": "string",
+      "enum": ["seed-tts-2.0"],
+      "default": "seed-tts-2.0"
+    },
+    "transcription_resource_id": {
+      "type": "string",
+      "enum": ["volc.seedasr.auc"],
+      "default": "volc.seedasr.auc"
+    },
+    "default_voice": {
+      "type": "string",
+      "default": "zh_female_xiaohe_uranus_bigtts"
+    },
+    "uid": {
+      "type": "string",
+      "default": "lax"
+    }
+  },
+  "providers": [
+    {
+      "id": "doubao-seed",
+      "name": "Doubao Seed",
+      "base_url": "https://openspeech.bytedance.com",
+      "auth": {"header": "X-Api-Key", "scheme": "raw"},
+      "routes": [
+        {"protocol": "openai-speech", "path": "/api/v3/tts/unidirectional"},
+        {"protocol": "openai-transcriptions", "path": "/api/v3/auc/bigmodel/recognize/flash"}
+      ],
+      "catalog": "./models.json",
+      "dialects": "./dialects.json"
+    }
+  ]
+}

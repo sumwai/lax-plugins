@@ -1,0 +1,21 @@
+{
+  "schema": "lax.dialect/v1",
+  "dialects": [
+    {
+      "id": "com.lax.doubao-seed/seed-tts@1",
+      "operation": "speech.synthesize@1",
+      "display_name": "Doubao Seed TTS",
+      "upstream_wire": "openai-speech",
+      "transport": {"request": "json", "response": "binary", "streaming": "none"},
+      "implementation": {"prepare": "hook", "decode": "hook"}
+    },
+    {
+      "id": "com.lax.doubao-seed/seed-asr@1",
+      "operation": "speech.transcribe@1",
+      "display_name": "Doubao Seed ASR",
+      "upstream_wire": "openai-transcriptions",
+      "transport": {"request": "json", "response": "json", "streaming": "none"},
+      "implementation": {"prepare": "hook", "decode": "hook"}
+    }
+  ]
+}
